@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -29,12 +30,15 @@ import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import devandroid.felipe.aluvery.R
+import devandroid.felipe.aluvery.extensions.toBrazilianCurrency
+import devandroid.felipe.aluvery.model.ProductModel
 import devandroid.felipe.aluvery.ui.theme.Purple500
 import devandroid.felipe.aluvery.ui.theme.Teal200
+import java.math.BigDecimal
 
 
 @Composable
-fun ProductItem() {
+fun ProductItem(product: ProductModel) {
     Surface(
         shape = RoundedCornerShape(15.dp),
         shadowElevation = 4.dp
@@ -58,26 +62,27 @@ fun ProductItem() {
                     )
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                    painter = painterResource(id = product.image),
                     contentDescription = "Imagem do Produto",
                     Modifier
                         .size(imageSize)
                         .offset(y = imageSize / 2)
                         .clip(shape = CircleShape)
-                        .align(Alignment.BottomCenter)
+                        .align(Alignment.BottomCenter),
+                    contentScale = ContentScale.Crop
                 )
             }
             Spacer(modifier = Modifier.height(imageSize / 2))
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    LoremIpsum(50).values.first(),
+                    product.name,
                     fontSize = 18.sp,
                     fontWeight = FontWeight(700),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 2
                 )
                 Text(
-                    text = "R$ 14,99",
+                    text = product.price.toBrazilianCurrency(),
                     fontSize = 14.sp,
                     fontWeight = FontWeight(400),
                     modifier = Modifier.padding(top = 8.dp)
@@ -90,6 +95,12 @@ fun ProductItem() {
 
 @Preview(showBackground = true)
 @Composable
-fun ProductItemPreview() {
-    ProductItem()
+private fun ProductItemPreview() {
+    ProductItem(
+        ProductModel(
+            name = "Burguer",
+            price = BigDecimal("19.99"),
+            image = R.drawable.placeholder
+        )
+    )
 }

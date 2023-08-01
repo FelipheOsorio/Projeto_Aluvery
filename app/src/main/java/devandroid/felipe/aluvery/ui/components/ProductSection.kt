@@ -14,32 +14,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import devandroid.felipe.aluvery.R
+import devandroid.felipe.aluvery.model.ProductModel
+import devandroid.felipe.aluvery.sampledata.sampleData
+import java.math.BigDecimal
 
 
 @Composable
-fun ProductSection() {
+fun ProductSection(title: String, products: List<ProductModel>) {
     Column {
         Text(
-            text = "Promoções",
+            text = title,
             fontWeight = FontWeight(400),
             fontSize = 20.sp,
-            modifier = Modifier.padding(
-                start = 16.dp,
-                top = 16.dp,
-                end = 16.dp
-            )
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
         )
         Row(
             Modifier
-                .padding(vertical = 16.dp)
                 .horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
 
             ) {
             Spacer(Modifier)
-            ProductItem()
-            ProductItem()
-            ProductItem()
+            for(p in products) {
+                ProductItem(product = p)
+            }
             Spacer(Modifier)
         }
     }
@@ -47,6 +46,6 @@ fun ProductSection() {
 
 @Preview(showBackground = true)
 @Composable
-fun ProductSectionPreview() {
-    ProductSection()
+private fun ProductSectionPreview() {
+    ProductSection(title = "Promoções", sampleData)
 }

@@ -1,4 +1,10 @@
 package devandroid.felipe.aluvery.model
 
-class ProductModel {
-}
+import androidx.annotation.DrawableRes
+import java.math.BigDecimal
+
+class ProductModel(
+    val name: String,
+    val price: BigDecimal,
+    @DrawableRes val image: Int
+)
