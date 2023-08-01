@@ -14,10 +14,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import devandroid.felipe.aluvery.R
 import devandroid.felipe.aluvery.model.ProductModel
 import devandroid.felipe.aluvery.sampledata.sampleData
-import java.math.BigDecimal
 
 
 @Composable
