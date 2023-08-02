@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,7 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import devandroid.felipe.aluvery.model.ProductModel
-import devandroid.felipe.aluvery.sampledata.sampleData
+import devandroid.felipe.aluvery.sampledata.sampleProducts
+import devandroid.felipe.aluvery.ui.theme.AluveryTheme
 
 
 @Composable
@@ -29,7 +32,8 @@ fun ProductSection(title: String, products: List<ProductModel>) {
         )
         Row(
             Modifier
-                .horizontalScroll(rememberScrollState()),
+                .horizontalScroll(rememberScrollState())
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
 
             ) {
@@ -45,5 +49,9 @@ fun ProductSection(title: String, products: List<ProductModel>) {
 @Preview(showBackground = true)
 @Composable
 private fun ProductSectionPreview() {
-    ProductSection(title = "Promoções", sampleData)
+    AluveryTheme {
+        Surface {
+            ProductSection("Promoções", products = sampleProducts)
+        }
+    }
 }

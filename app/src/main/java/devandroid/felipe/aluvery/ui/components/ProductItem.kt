@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,13 +27,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import devandroid.felipe.aluvery.R
 import devandroid.felipe.aluvery.extensions.toBrazilianCurrency
 import devandroid.felipe.aluvery.model.ProductModel
-import devandroid.felipe.aluvery.ui.theme.Purple500
-import devandroid.felipe.aluvery.ui.theme.Teal200
+import devandroid.felipe.aluvery.ui.theme.AluveryTheme
 import java.math.BigDecimal
 
 
@@ -55,20 +57,22 @@ fun ProductItem(product: ProductModel) {
                     .background(
                         Brush.horizontalGradient(
                             listOf(
-                                Purple500, Teal200
+                                MaterialTheme.colorScheme.primary,
+                                MaterialTheme.colorScheme.secondary
                             )
                         )
                     )
             ) {
-                Image(
-                    painter = painterResource(id = product.image),
-                    contentDescription = "Imagem do Produto",
+                AsyncImage(
+                    model = product.image,
+                    contentDescription = null,
                     Modifier
                         .size(imageSize)
                         .offset(y = imageSize / 2)
                         .clip(shape = CircleShape)
                         .align(Alignment.BottomCenter),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+                    placeholder = painterResource(id = R.drawable.placeholder)
                 )
             }
             Spacer(modifier = Modifier.height(imageSize / 2))
@@ -95,11 +99,14 @@ fun ProductItem(product: ProductModel) {
 @Preview(showBackground = true)
 @Composable
 private fun ProductItemPreview() {
-    ProductItem(
-        ProductModel(
-            name = "Burguer",
-            price = BigDecimal("19.99"),
-            image = R.drawable.placeholder
-        )
-    )
+    AluveryTheme {
+        Surface {
+            ProductItem(
+                ProductModel(
+                    name = LoremIpsum(50).values.first(),
+                    price = BigDecimal("14.99")
+                )
+            )
+        }
+    }
 }
