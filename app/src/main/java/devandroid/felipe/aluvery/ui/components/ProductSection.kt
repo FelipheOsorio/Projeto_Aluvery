@@ -21,8 +21,12 @@ import devandroid.felipe.aluvery.ui.theme.AluveryTheme
 
 
 @Composable
-fun ProductSection(title: String, products: List<ProductModel>) {
-    Column {
+fun ProductSection(
+    title: String,
+    products: List<ProductModel>,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier) {
         Text(
             text = title,
             fontWeight = FontWeight(400),
