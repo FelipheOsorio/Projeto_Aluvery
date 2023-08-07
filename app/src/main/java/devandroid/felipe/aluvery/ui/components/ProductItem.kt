@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +33,8 @@ import devandroid.felipe.aluvery.R
 import devandroid.felipe.aluvery.extensions.toBrazilianCurrency
 import devandroid.felipe.aluvery.model.ProductModel
 import devandroid.felipe.aluvery.ui.theme.AluveryTheme
+import devandroid.felipe.aluvery.ui.theme.Indigo400
+import devandroid.felipe.aluvery.ui.theme.Indigo500
 import java.math.BigDecimal
 
 
@@ -60,8 +61,8 @@ fun ProductItem(
                     .background(
                         Brush.horizontalGradient(
                             listOf(
-                                MaterialTheme.colorScheme.primary,
-                                MaterialTheme.colorScheme.secondary
+                                Indigo400,
+                                Indigo500,
                             )
                         )
                     )

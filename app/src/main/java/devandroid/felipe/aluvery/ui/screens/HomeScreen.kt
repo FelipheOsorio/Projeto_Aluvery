@@ -3,17 +3,10 @@ package devandroid.felipe.aluvery.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +19,8 @@ import devandroid.felipe.aluvery.model.ProductModel
 import devandroid.felipe.aluvery.sampledata.sampleProducts
 import devandroid.felipe.aluvery.sampledata.sampleSections
 import devandroid.felipe.aluvery.ui.components.CardProductItem
+import devandroid.felipe.aluvery.ui.components.ProductSection
+import devandroid.felipe.aluvery.ui.components.SearchTextField
 import devandroid.felipe.aluvery.ui.theme.AluveryTheme
 
 
@@ -33,44 +28,45 @@ import devandroid.felipe.aluvery.ui.theme.AluveryTheme
 fun HomeScreen(sections: Map<String, List<ProductModel>>) {
     Column {
         var textValue by remember { mutableStateOf("") }
-        
-        OutlinedTextField(
-            value = textValue,
-            onValueChange = { newValue ->
-                textValue = newValue
-            },
-            shape = RoundedCornerShape(100),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            leadingIcon = {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "icone de busca")
-            },
-            label = {
-                Text(text = "Produto")
-            },
-            placeholder = {
-                Text(text = "O que você procura")
-            },
-            singleLine = true
-        )
+
+        SearchTextField(searchText = textValue, onSearchTextChanged = { textValue = it })
+
+        val searchedProducts = remember(textValue) {
+            if (textValue.isNotBlank()) {
+                sampleProducts.filter { product ->
+                    product.name.contains(textValue, true) ||
+                            product.description?.contains(textValue, true) ?: false
+                }
+            } else emptyList()
+        }
+
         LazyColumn(
             Modifier
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(sampleProducts) { p ->
-                CardProductItem(product = p, Modifier.padding(horizontal = 16.dp))
+            when {
+                textValue.isBlank() -> {
+                    items(sections.toList()) { section ->
+                        val title = section.first
+                        val product = section.second
+
+                        ProductSection(title = title, products = product)
+                    }
+                }
+
+                else -> {
+                    items(searchedProducts) { p ->
+                        CardProductItem(product = p, Modifier.padding(horizontal = 16.dp))
+                    }
+                }
             }
-//            items(sections.toList()) { section ->
-//                val title = section.first
-//                val product = section.second
-//
-//                ProductSection(title = title, products = product)
-//            }
+
+
         }
     }
 }
+
 
 @Preview(showSystemUi = true)
 @Composable

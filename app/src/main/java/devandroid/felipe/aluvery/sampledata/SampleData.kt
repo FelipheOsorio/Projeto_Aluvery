@@ -40,7 +40,7 @@ val sampleDrinks = listOf(
         image = "https://images.pexels.com/photos/96974/pexels-photo-96974.jpeg"
     ),
     ProductModel(
-        name = "Água",
+        name = "Agua",
         price = BigDecimal("2.99"),
         image = "https://images.pexels.com/photos/327090/pexels-photo-327090.jpeg"
     )
